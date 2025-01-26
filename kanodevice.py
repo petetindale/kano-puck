@@ -41,15 +41,15 @@ async def discover_details(address):
             services = await client.get_services()
             # Iterate through each service
             for service in services:
-                print(f"Service: {service.uuid} Description: ({service.description})")
+                print(f"\nService: {service.uuid} Description: ({service.description})")
                 # Iterate through characteristics in each service
                 for serchar in service.characteristics:
-                    print(f"  Characteristic: {serchar.uuid}, Properties: {serchar.properties}, Desc: {serchar.description})")
+                    print(f"--Characteristic: {serchar.uuid}, Properties: {serchar.properties}, Desc: {serchar.description})")
 
                     # If characteristic is readable, get its value
                     if 'read' in serchar.properties :
                         value = await client.read_gatt_char(serchar.uuid)
-                        print(f"  Characteristic value: {serchar.uuid}: {value}")
+                        print(f"----Value: {serchar.uuid}: {value}")
         else:
             print("Failed to connect to the device.")
 
@@ -136,9 +136,11 @@ async def main():
 
         return
     
-    await stream_ir_sensor(kano_device)
+    await discover_details(kano_device)
 
-    #await connect_to_device(kano_device)    
+    #await stream_ir_sensor(kano_device)
+
+
     #await writesensor(kano_device, "11a70301-f691-4b93-a6f4-0968f5b648f8", bytearray(b'\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF'), True)
     #await writesensor(kano_device, "11a70302-f691-4b93-a6f4-0968f5b648f8", bytearray(b'\xFF'), False)
     #await blastwrite(kano_device, "11a70304-f691-4b93-a6f4-0968f5b648f8", True)
