@@ -136,9 +136,9 @@ async def main():
 
         return
     
-    await discover_details(kano_device)
+    #await discover_details(kano_device)
 
-    #await stream_ir_sensor(kano_device)
+    await stream_ir_sensor(kano_device)
 
 
     #await writesensor(kano_device, "11a70301-f691-4b93-a6f4-0968f5b648f8", bytearray(b'\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF'), True)
