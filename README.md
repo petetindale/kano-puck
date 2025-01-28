@@ -13,9 +13,9 @@ Note: this leverages Bleak Python [Bleak Documentation](https://bleak.readthedoc
 
 - `11a70201-f691-4b93-a6f4-0968f5b648f8` is the main IR sensor returning a byte array `[0] == North, [1] == East, [2] == South, [3] == West`
 
-### Extract from device BLE data.
+### Extract from device BLE data
 
-```
+```text
 Service: 11a70100-f691-4b93-a6f4-0968f5b648f8 Description: (Unknown)
 --Characteristic: 11a70101-f691-4b93-a6f4-0968f5b648f8, Properties: ['read'], Desc: Unknown)
 ----Value: 11a70101-f691-4b93-a6f4-0968f5b648f8: bytearray(b'Kano Computing')
