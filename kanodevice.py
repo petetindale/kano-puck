@@ -70,11 +70,24 @@ async def stream_ir_sensor(address):
 
             while client.is_connected:
                 value = await client.read_gatt_char(ir_sensor_characteristic_uuid)
-                #If the button is 'towards you' North (N) is furthest away, East (E) is to the right, South (S) is closest, West (W) is to the left
-                print(f"array: N{value[0]}-E{value[1]}-S{value[2]}-W{value[3]}")
+                
+                yield value
                 
         else:
             print("Failed to connect to the device.")
+
+async def process_ir_sensor_data(address):
+    """
+    Process IR sensor data from a Kano device.
+    
+    Args:
+        address (str): The BLE address of the device to process data from
+    """
+    async for value in stream_ir_sensor(address):
+        #If the button is 'towards you' North (N) [0] is furthest away, East (E) [1] is to the right, South (S) [2] is closest, West (W) [3] is to the left
+        #The value is a 4 byte array with each byte representing the strength of the signal 255 with zero reflection to 0 with maximum reflection
+        print(f"IR Array: N{value[0]:03}-E{value[1]:03}-S{value[2]:03}-W{value[3]:03}")
+        
 
 async def writesensor(address, serchar, value, read):
     """
@@ -138,7 +151,7 @@ async def main():
     
     #await discover_details(kano_device)
 
-    await stream_ir_sensor(kano_device)
+    await process_ir_sensor_data(kano_device)
 
 
     #await writesensor(kano_device, "11a70301-f691-4b93-a6f4-0968f5b648f8", bytearray(b'\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF'), True)
